@@ -3,7 +3,19 @@ const mongoose = require("mongoose");
 const app = express();
 const dotenv = require("dotenv");
 dotenv.config();
+const expressValidator = require("express-validator");
 
+/////////////////////////////
+const morgan = require("morgan");
+const bodyParser = require("body-parser");
+const cookieParser = require("cookie-parser");
+
+//////////////////////////////
+
+app.use(morgan("dev"));
+app.use(bodyParser.json());
+app.use(cookieParser());
+app.use(expressValidator());
 //import routes
 const userRoutes = require("./routes/user.js");
 
