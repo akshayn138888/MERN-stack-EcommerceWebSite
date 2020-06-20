@@ -1,6 +1,15 @@
 const express = require("express");
-const app = expresss();
-require("dotenv").config();
+const mongoose = require("mongoose");
+const app = express();
+const dotenv = require("dotenv");
+dotenv.config();
+mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true }).then(() => {
+  console.log("DB Connected");
+});
+
+mongoose.connection.on("error", err => {
+  console.log(`DB connection error: ${err}`);
+});
 
 app.get("/", (req, res) => {
   res.send("hello from ndoe");
@@ -8,6 +17,6 @@ app.get("/", (req, res) => {
 
 const port = process.env.PORT || 8000;
 
-app.listen(PORT, () => {
-  console.log(`Server is running on ${PORT}`);
+app.listen(port, () => {
+  console.log(`Server is running on ${port}`);
 });
