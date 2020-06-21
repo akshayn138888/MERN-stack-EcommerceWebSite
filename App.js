@@ -17,6 +17,8 @@ app.use(bodyParser.json());
 app.use(cookieParser());
 app.use(expressValidator());
 //import routes
+const authRoutes = require("./routes/auth.js");
+
 const userRoutes = require("./routes/user.js");
 
 mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true }).then(() => {
@@ -27,8 +29,8 @@ mongoose.connection.on("error", err => {
   console.log(`DB connection error: ${err}`);
 });
 
+app.use("/api", authRoutes);
 app.use("/api", userRoutes);
-
 const port = process.env.PORT || 8000;
 
 app.listen(port, () => {
